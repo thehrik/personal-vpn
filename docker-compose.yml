@@ -1,0 +1,22 @@
+services:
+  pdnetserver:
+    build:
+      context: ./vpn-server
+      dockerfile: Dockerfile
+    ports:
+      - "1194:1194/udp"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./pdnetserver-data/clients:/etc/openvpn/clients
+      - ./pdnetserver-data/certs-and-keys:/etc/openvpn/certs-and-keys
+    environment:
+      - EASYRSA_PASS=${EASYRSA_PASS:-password}
+      - SERVER_PASS=${SERVER_PASS:-password}
+      - CLIENT_PASS=${CLIENT_PASS:-password}
+      - SERVER_IP=${SERVER_IP:-192.168.0.104}  # Add this line to make IP configurable
+    sysctls:
+      net.ipv4.ip_forward: 1
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    network_mode: bridge  # Explicitly set bridge network mode
