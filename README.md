@@ -11,11 +11,11 @@ how to setup
 
 - run this command in the root driectory of this project
   ```
-  docker build -t personal-vpn .
+  docker build -t vpn-server .
   ```
 
   ```
-  docker run -d -p 80:80 -p 443:443 --name personal-vpn personal-vpn
+  docker compose up
   ```
 
 - copy the client.ovpn file from ```pdnetserver-data/clients/client.ovpn``` to your local machine or android device or ios device
